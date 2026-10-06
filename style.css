@@ -1,0 +1,6 @@
+body { font-family: sans-serif; max-width: 500px; margin: 20px auto; padding: 0 10px; }
+form { display: grid; gap: 8px; }
+#error { color: red; margin: 0; }
+#filter { margin: 16px 0 8px; }
+button.on { background: #222; color: #fff; }
+li.selesai span { text-decoration: line-through; color: gray; }
