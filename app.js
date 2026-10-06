@@ -1,4 +1,4 @@
-let tugas = [{id: 1, judul: "Contoh", matkul: "Web", deadline: "2026-12-01", selesai: false}];
+let tugas = [];
 let filter = "semua";
  
 const form = document.querySelector("#form");
@@ -44,5 +44,47 @@ function render() {
     b.classList.toggle("on", b.dataset.filter === filter);
   }
 }
+
+form.addEventListener("submit", function (e) {
+  e.preventDefault();
+  const judul = document.querySelector("#judul").value.trim();
+  const matkul = document.querySelector("#matkul").value.trim();
+  const deadline = document.querySelector("#deadline").value;
+ 
+  if (judul.length < 3) {
+    error.textContent = "Judul minimal 3 karakter.";
+    return;
+  }
+  if (!deadline) {
+    error.textContent = "Deadline wajib diisi.";
+    return;
+  }
+ 
+  error.textContent = "";
+  tugas.push({ id: Date.now(), judul, matkul, deadline, selesai: false });
+  form.reset();
+  render();
+});
+ 
+daftar.addEventListener("click", function (e) {
+  const li = e.target.closest("li");
+  if (!li) return;
+  const id = Number(li.dataset.id);
+ 
+  if (e.target.matches(".hapus")) {
+    tugas = tugas.filter((t) => t.id !== id);
+  } else if (e.target.matches("input[type=checkbox]")) {
+    const t = tugas.find((t) => t.id === id);
+    t.selesai = e.target.checked;
+  }
+  render();
+});
+ 
+filterBar.addEventListener("click", function (e) {
+  if (e.target.dataset.filter) {
+    filter = e.target.dataset.filter;
+    render();
+  }
+});
 
 render();
